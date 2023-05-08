@@ -12,7 +12,7 @@ public class Setup {
 	private String name;
 	private String description;
 	private double price;
-	private String file;
+	private String uploadedFile;
 	
 	public long getId() {
 		return id;
@@ -44,10 +44,10 @@ public class Setup {
 		return "Setup [name=" + name + ", description=" + description + ", price=" + price + "]";
 	}
 	public String getFile() {
-		return file;
+		return uploadedFile;
 	}
 	public void setFile(String file) {
-		this.file = file;
+		this.uploadedFile = file;
 	}
 	
 }
