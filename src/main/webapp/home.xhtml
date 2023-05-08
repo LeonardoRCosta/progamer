@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<style type="text/css">
+.noHeader.ui-datatable table thead tr {
+	display: none;
+}
+</style>
+</h:head>
+
+<h:body>
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/templates/menu.xhtml" />
+		</ui:insert>
+	</div>
+	<br />
+	<p:panel>
+		<div class="card">
+			<h:form id="form">
+				<p:dataTable id="basicDT" var="setup" value="#{setupBean.findAll()}"
+					styleClass="noHeader">
+					<p:column exportable="false" style="width: 15%;">
+						<p:graphicImage name="images/#{setup.file}"
+							style="height: 140px" />
+					</p:column>
+					<p:column>
+						<h2>#{setup.name}</h2>
+						<br />
+						<h:outputText value="#{setup.description}" />
+					</p:column>
+					<p:column style="text-align: center; width: 15%;">
+						<h2>R$ #{setup.price}</h2>
+						<p:commandButton update=":form:setupDetail"
+							oncomplete="PF('setupDialog').show()" value="Details"
+							icon="pi pi-search" title="View" ajax="true">
+							<f:setPropertyActionListener value="#{setup}"
+								target="#{setupBean.selectedSetup}" />
+						</p:commandButton>
+						<br />
+					</p:column>
+				</p:dataTable>
+
+				<p:dialog header="Details" widgetVar="setupDialog" modal="true"
+					showEffect="fade" hideEffect="fade" resizable="false">
+					<p:outputPanel id="setupDetail" style="text-align:center;">
+						<p:column rendered="#{not empty setupBean.selectedSetup}">
+							<div>
+								<h2>#{setupBean.selectedSetup.name}</h2>
+								<br />
+							</div>
+							<p:graphicImage name="images/#{setupBean.selectedSetup.file}" />
+							<div>#{setupBean.selectedSetup.description}</div>
+							<h:outputText value="#{setupBean.selectedSetup.price}">
+								<f:convertNumber currencySymbol="R$" type="currency" />
+							</h:outputText>
+						</p:column>
+					</p:outputPanel>
+				</p:dialog>
+			</h:form>
+		</div>
+	</p:panel>
+</h:body>
+</html>
