@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import br.com.fiap.model.Profile;
+import br.com.fiap.model.Setup;
 
 @Named
 @ViewScoped
@@ -32,5 +33,14 @@ public class ProfileDAO {
 		TypedQuery<Profile> query = (TypedQuery<Profile>) entityManager.createQuery(
 				"SELECT e FROM Profile e");
 		return query.getResultList();
+	}
+
+	public Profile buscarPorId(Long id) {
+		return entityManager.find(Profile.class, id);
+	}
+
+	@Transactional
+	public void deletar(Profile profile) {
+		entityManager.remove(profile);
 	}
 }
